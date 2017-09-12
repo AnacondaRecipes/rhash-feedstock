@@ -11,7 +11,7 @@ source:
   sha256: 98e0688acae29e68c298ffbcdbb0f838864105f9b2bd8857980664435b1f1f2e
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win or not py36]
 
 requirements:
