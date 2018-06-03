@@ -13,11 +13,18 @@ source:
 build:
   number: 0
   skip: true  # [win]
+  run_exports:
+    # https://abi-laboratory.pro/tracker/timeline/rhash/
+    # Backwards compat was broken in the early versions b/w patch releases,
+    # but seems to be stable since the past 6 years. Go for default pinning.
+    - {{ pin_subpackage('rhash') }}
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - make  # [unix]
+    - make                 # [unix]
+  host:
+    - openssl
 
 test:
   source_files:
