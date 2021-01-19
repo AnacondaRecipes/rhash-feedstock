@@ -11,7 +11,7 @@ source:
   sha256: 430c812733e69b78f07ce30a05db69563450e41e217ae618507a4ce2e144a297
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   run_exports:
     # https://abi-laboratory.pro/tracker/timeline/rhash/
