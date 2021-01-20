@@ -1,6 +1,14 @@
 #!/bin/bash
 set -x
 
+if [[ ${target_platform} =~ .*linux*. ]]; then
+  RPATH="-Wl,-rpath-link,${PREFIX}/lib"
+elif [[ ${target_platform} == osx-64 ]]; then
+  RPATH="-Wl,-rpath,${PREFIX}/lib"
+fi
+
+export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib ${RPATH}"
+
 ./configure \
   --enable-openssl \
   --prefix=$PREFIX \
@@ -9,7 +17,7 @@ set -x
   --extra-cflags="$CFLAGS -I$PREFIX/include" \
   --extra-ldflags="$LDFLAGS"
 
-make install
+make install install-lib-headers install-lib-so-link
 make check
 
 if [[ ${HOST} =~ .*darwin.* ]]; then
