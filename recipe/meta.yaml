@@ -1,5 +1,5 @@
 {% set name = "rhash" %}
-{% set version = "1.4.1" %}
+{% set version = "1.4.3" %}
 
 package:
   name: {{ name|lower }}
@@ -8,10 +8,10 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/rhash/RHash/archive/v{{ version }}.tar.gz
-  sha256: 430c812733e69b78f07ce30a05db69563450e41e217ae618507a4ce2e144a297
+  sha256: 1e40fa66966306920f043866cbe8612f4b939b033ba5e2708c3f41be257c8a3e
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   run_exports:
     # https://abi-laboratory.pro/tracker/timeline/rhash/
@@ -24,7 +24,9 @@ requirements:
     - {{ compiler('c') }}
     - make                 # [unix]
   host:
-    - openssl
+    - openssl {{ openssl }}
+  run:
+    - openssl 3.*
 
 test:
   source_files:
@@ -39,14 +41,14 @@ test:
     - tests/test_rhash.sh  # [unix]
 
 about:
-  home: http://rhash.anz.ru/
+  home: https://rhash.sourceforge.net/
   license: MIT
   license_family: MIT
   license_file: COPYING
   summary: Great utility for computing hash sums
   description: |
     RHash is a console utility for computing and verifying hash sums of files. It supports CRC32, MD4, MD5, SHA1, SHA256, SHA512, SHA3, Tiger, TTH, Torrent BTIH, AICH, ED2K, GOST R 34.11-94, RIPEMD-160, HAS-160, EDON-R 256/512, WHIRLPOOL and SNEFRU hash sums.
-  doc_url: http://rhash.anz.ru/manpage.php
+  doc_url: https://rhash.sourceforge.net/manpage.php
   dev_url: https://github.com/rhash/RHash
 
 extra:
