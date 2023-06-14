@@ -15,7 +15,8 @@ export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib ${RPATH}"
   --enable-lib-static \
   --enable-lib-shared \
   --extra-cflags="$CFLAGS -I$PREFIX/include" \
-  --extra-ldflags="$LDFLAGS"
+  --extra-ldflags="$LDFLAGS" \
+  --ar=$AR
 
 make install install-lib-headers install-lib-so-link
 make check
