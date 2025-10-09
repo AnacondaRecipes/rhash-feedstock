@@ -1,14 +1,13 @@
 {% set name = "rhash" %}
-{% set version = "1.4.3" %}
+{% set version = "1.4.6" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/rhash/RHash/archive/v{{ version }}.tar.gz
-  sha256: 1e40fa66966306920f043866cbe8612f4b939b033ba5e2708c3f41be257c8a3e
+  url: https://github.com/{{ name }}/RHash/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 9f6019cfeeae8ace7067ad22da4e4f857bb2cfa6c2deaa2258f55b2227ec937a
 
 build:
   number: 0
@@ -31,23 +30,26 @@ requirements:
 test:
   source_files:
     - tests
-
   commands:
     - test -f "$PREFIX/include/rhash.h"
     - test -f "$PREFIX/lib/librhash${SHLIB_EXT}"  # [unix]
-    - test -f "$PREFIX/lib/librhash.so.0"  # [linux]
-    - test -f "$PREFIX/lib/librhash.0.dylib"  # [osx]
+    - test -f "$PREFIX/lib/librhash.so.1"  # [linux]
+    - test -f "$PREFIX/lib/librhash.1.dylib"  # [osx]
     - rhash --version
-    - tests/test_rhash.sh  # [unix]
+    # The rhash variable was already set in the conda-build environment with the value "1",
+    # which prevented the test script from overwriting it with the actual binary path from the command-line argument.
+    - unset rhash OPT_SHARED OPT_FULL
+    - ./tests/test_rhash.sh --shared $PREFIX/bin/rhash
 
 about:
-  home: https://rhash.sourceforge.net/
+  home: https://rhash.sourceforge.net
   license: MIT
   license_family: MIT
   license_file: COPYING
   summary: Great utility for computing hash sums
   description: |
-    RHash is a console utility for computing and verifying hash sums of files. It supports CRC32, MD4, MD5, SHA1, SHA256, SHA512, SHA3, Tiger, TTH, Torrent BTIH, AICH, ED2K, GOST R 34.11-94, RIPEMD-160, HAS-160, EDON-R 256/512, WHIRLPOOL and SNEFRU hash sums.
+    RHash is a console utility for computing and verifying hash sums of files. 
+    It supports CRC32, MD4, MD5, SHA1, SHA256, SHA512, SHA3, Tiger, TTH, Torrent BTIH, AICH, ED2K, GOST R 34.11-94, RIPEMD-160, HAS-160, EDON-R 256/512, WHIRLPOOL and SNEFRU hash sums.
   doc_url: https://rhash.sourceforge.net/manpage.php
   dev_url: https://github.com/rhash/RHash
 
@@ -55,3 +57,5 @@ extra:
   recipe-maintainers:
     - xantares
     - isuruf
+  skip-lints:
+    - should_use_stdlib
