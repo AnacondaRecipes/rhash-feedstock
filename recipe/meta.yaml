@@ -20,6 +20,7 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - make                 # [unix]
   host:
@@ -57,5 +58,3 @@ extra:
   recipe-maintainers:
     - xantares
     - isuruf
-  skip-lints:
-    - should_use_stdlib
