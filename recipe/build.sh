@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# NOTES:
+# --disable-shani (disable: -msse4 -msha )
+# rhash should built without SSE4.1 which is incompatible with baseline of nocona PKG-10832
+
 set -x
 
 if [[ ${target_platform} =~ .*linux*. ]]; then
@@ -11,6 +16,7 @@ export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib ${RPATH}"
   --enable-openssl \
   --prefix=$PREFIX \
   --enable-lib-shared \
+  --disable-shani \
   --extra-cflags="$CFLAGS -I$PREFIX/include" \
   --extra-ldflags="$LDFLAGS" \
   --ar=$AR
